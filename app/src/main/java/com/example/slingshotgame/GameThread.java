@@ -8,13 +8,13 @@ public class GameThread extends Thread {
     private GameView gameView;
     private boolean running;
 
-    public GameThread(SurfaceHolder holder, GameView view) {
-        surfaceHolder = holder;
-        gameView = view;
+    public GameThread(SurfaceHolder surfaceHolder, GameView gameView) {
+        this.surfaceHolder = surfaceHolder;
+        this.gameView = gameView;
     }
 
-    public void setRunning(boolean isRunning) {
-        running = isRunning;
+    public void setRunning(boolean running) {
+        this.running = running;
     }
 
     @Override
@@ -28,12 +28,13 @@ public class GameThread extends Thread {
                     gameView.draw(canvas);
                 }
             } finally {
-                if (canvas != null)
+                if (canvas != null) {
                     surfaceHolder.unlockCanvasAndPost(canvas);
+                }
             }
 
             try {
-                sleep(16); // ~60 FPS
+                Thread.sleep(16); // ~60 FPS
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
